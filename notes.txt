@@ -1,0 +1,105 @@
+CLASE 3 - Preparación del entorno de trabajo en Mac
+---------------------------------------------------
+
+---- Entornos virtuales 
+permiten multiples entornos con distintas dependencias por proyectos.
+Antes virtualenv - virtualen grapper
+Ahora en python3 se integró el manejo de entornos virtuales como parte del modulo principal
+
+.env = .env
+
+$ python3 -m venv .env
+creata los directorios: bin - include - lib
+Importa bin que habilita un script que nos permite habilitar el entorno virtual
+
+$ source .env/bin/activate
+
+(.env) /var/local/django2019
+Que el nombre virtual este al principio indica que todas las dependencias se van a instalar solo en este entorno
+
+Para descativar el entorno virtual -> deactivate dentro del entorno activado
+
+$ (.env) /var/local/django deactivate
+
+
+$ cd platzigram
+$ source ../.env/bin/activate
+
+Se instala django en el entorno virtual 
+$ pip install django -U
+
+Para ver las librerias instaladas en el entorno
+$ pip freeze
+
+El entorno virtual .env es un folder se borra y listo
+En git hay que ignorarlo para no trackearlo
+
+$ python3 --version
+$ pip3 --version
+
+CLASE 4) Creación del proyecto Platzigram / Tu primer Hola, mundo! en Django
+---------------------------------------------------------------------------
+
+En el entorno viertual
+cd platzigram
+$ django-admin startproject [project_name] [path]
+$ django-admin startproject platzigram .
+
+Se crean las siguientes carpetas
+platzigram :
+* __init__.py : Declarar platzigram como un modulo de python
+* urls.py : binde los request
+* wsgi.py : Utilizado para produccion
+*manage.py : Nunca se toca. Interfaz sobre django-admin
+
+* settings.py : Define configuraciones del proyecto
+BASE_DIR Declara donde corre el proyecto.
+SECRET_KEY: UTilizado para hashing de las contraseñas y sesiones almacenadas en la BD
+DEBUG
+ALLOWED_HOSTS : EN deployment hosts impermitidas para interactuar con nuestro proyecto
+ROOT_URLCONF : modulo que define urls
+
+Interaccion con manage
+
+$ python3 manage.py   (output similar a django-admin)
+
+Para iniciar el servidor
+$ python3 manage.py runserver
+
+Primera vista
+path('hello-world', hello_world)
+
+En este caso es solo una funcion hello_world que recibe request como parametro y retorno HttpResponse('hello')
+
+CLASE 5) El objeto Request
+--------------------------
+Las funciones que responden a la url django las denomina VISTAS
+
+La vista recibe 3 parametros objeto request(HttpRequest), parametros(de la url) y parametros adicionales
+
+import pdb; pdb.set_trace()
+es un debugger en la console
+
+path('sorted/', views.sort_integers),
+path('hi/<str:name>/<int:age>/', views.say_hi),
+
+CLASE 6) Creación de la primera app
+-----------------------------------
+Se crea la app de POSTS
+$ python3 manage.py startapp posts
+el comando crea una carpeta migrations -> __init__.py : graba los cambios en la bd 
+* admin.py: registra los modelos en el administrador de django
++ apps.py: declara nuestra config para que sea reutilizable
+
+condiguramos el apps.py e instalamos nuestra aplicaciones en settings.py INSTALLED_APPS
+app post
+
+CLASE 7) Introducción al template system
+---------------------------------------
+Template system es una manera de presentar los datos usando html, incluye un poco de logica de aplicacion
+Los templates los definimos en setting.py TEMPLATES
+Creamos una carpeta templates en la app posts
+sentencia if - for
+
+CLASE 8) Patrones de diseño y Django
+----------------------------------
