@@ -37,7 +37,7 @@ En git hay que ignorarlo para no trackearlo
 $ python3 --version
 $ pip3 --version
 
-CLASE 4) Creación del proyecto Platzigram / Tu primer Hola, mundo! en Django
+CLASE 5) Creación del proyecto Platzigram / Tu primer Hola, mundo! en Django
 ---------------------------------------------------------------------------
 
 En el entorno viertual
@@ -71,7 +71,12 @@ path('hello-world', hello_world)
 
 En este caso es solo una funcion hello_world que recibe request como parametro y retorno HttpResponse('hello')
 
-CLASE 5) El objeto Request
+
+************* VISTAS ********
+
+
+
+CLASE 6) El objeto Request
 --------------------------
 Las funciones que responden a la url django las denomina VISTAS
 
@@ -83,8 +88,10 @@ es un debugger en la console
 path('sorted/', views.sort_integers),
 path('hi/<str:name>/<int:age>/', views.say_hi),
 
-CLASE 6) Creación de la primera app
+CLASE 8) Creación de la primera app
 -----------------------------------
+La idea de aplicaciones es agrupar funcionalidad similar 
+
 Se crea la app de POSTS
 $ python3 manage.py startapp posts
 el comando crea una carpeta migrations -> __init__.py : graba los cambios en la bd 
@@ -94,12 +101,154 @@ el comando crea una carpeta migrations -> __init__.py : graba los cambios en la 
 condiguramos el apps.py e instalamos nuestra aplicaciones en settings.py INSTALLED_APPS
 app post
 
-CLASE 7) Introducción al template system
+CLASE 9) Introducción al template system
 ---------------------------------------
 Template system es una manera de presentar los datos usando html, incluye un poco de logica de aplicacion
 Los templates los definimos en setting.py TEMPLATES
 Creamos una carpeta templates en la app posts
 sentencia if - for
 
-CLASE 8) Patrones de diseño y Django
+CLASE 10) Patrones de diseño y Django
 ----------------------------------
+MVC model -view -controler
+Separa datos de la presentacion de la logica
+Controller : Maneja la logica de reuqest. Sabe qué hacer y qué template debe mostrar. Cambia los datos a través del modelo (el modelo define la estructura de los datos, el acceso a ellos y la validacion)
+Vista : COmo presentar
+
+Django - MTV Model-template-view
+Modelo: estructura de los datos
+Template : Lógica de presentacion de los datos (View)
+View: Decide que template se encarga de mostrar los datos (Controller)
+
+
+************ MODELS ********
+
+
+CLASE 11) La M en el MTV
+----------------------
+
+En  setting.py la variable DATABASES
+https://docs.djangoproject.com/en/2.2/ref/settings/
+
+Opciones
+ENGINE : Motor de Base de datos
+
+Cuando corremos el servidor
+You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions.
+Run 'python manage.py migrate' to apply them.
+
+MIgraciones cambios que no sean reflejados en la BD. Solucion en el entorno
+$ python3 manage.py migrate
+
+ORM
+
+ATENCION: Django Ya incluye el modelo de usuarios. auth_user
+https://docs.djangoproject.com/en/2.2/ref/models/fields/
+
+Para reflejar el cambio en la BD del model User en la app Post, dentro del entorno siempre
+$ python3 manage.py makemigrations   #Busca los cambios y los refleja en el archivo
+$ python3 manage.py migrate			 #aplica los cambios en la BD
+Mirar el archivo intial en la folder migrations. Luego
+
+Se crea la tabla posts_user (app_name.model_name)
+
+CLASE 12) El ORM de Django
+--------------------------
+https://docs.djangoproject.com/en/2.2/topics/db/queries/
+
+Cargar django en una consola
+$ python3 manage.py shell
+
+Formas de insertar datos
+
+a)
+
+>>> from posts.models import User
+>>> pablo = User.objects.create(
+	email = 'fsfsdfsd@gamil',
+	password = '1234567',
+	first_name = 'palbo',
+	last_name='Trinidad'
+);
+Listo creado. Si consultamos pablo.id o pablo.pk devuelve 1. Significa que ya esta creado en la bd
+
+Editamos 
+
+>>> pablo.email = 'lalalala@gmail.com'
+>>> pablo.save()
+
+
+b)
+arturo = User()
+arturo.pk -> nada jeje
+arturo.email='arturo@platzi.com'
+arturo.first_name='arturo'
+arturo.last_name='martinez'
+arturo.passowrd = 'msi'
+arturo.is_admin = True
+arturo.save()
+
+
+arturo.delete()
+RETRIEVE
+>>> user = User.objects.get(email='lalalala@gmail.com')
+type(user)
+>>> platzi_users = User.objects.filter(email__endswith='@gmail.com')
+>>> users = User.objects.all()
+>>> platzi_users = User.objects.filter(email__endswith='@gmail.com').update(is_admin=True) #acutaliza todos juntos
+
+SQLITE3 
+$ sqlite3  /var/local/django-test/platzigram/db.sqlite3
+
+CLASE 14) Extendiendo el modelo de usuario
+-----------------------------------------
+Se utilizan las clases usuario de django. Vemos que en INSTALLED_APPS estan instaladas las apps de auth, admin, etc.
+
+Dos opciones: Crear usuario desde la consola o crear un superusuario usando el shell
+
+$ python3 manage.py shell
+>>> from django.contrib.auth.models import User
+>>> u = User.objects.create_user(username='brian',password='admin123')
+>>> u.password
+'pbkdf2_sha256$150000$cczxutG3FAmT$Oa7Bgtu5zAzcWRkB/4vFJDS1MMTfXYNpfKXOliKTg1M='
+
+CREAR SUPERUSUARIO
+$ python3 manage.py createsuperuser
+Email address: p@gmail.com
+Password: pablopablo
+Password (again) pablopablo
+
+Si nos fijamos en la bd, de las dos maneras se creo superusuario
+En el repo
+https://github.com/django/django/blob/master/django/contrib/auth/models.py
+is_staff = valor que define si podemos entrar al admin
+
+CLASE 15) Implementación del modelo de usuarios de Platzigram
+-------------------------------------------------------------
+
+Django propone dos opciones: utilizando el model Proxy y otra extendiendo la clase abstracta usuario que django ya implementa
+
+En este caso utilizamos el proxy
+$ python3 manage.py startapp users
+
+En el entorno virtual
+$ pip install pillow
+
+Ver columnas en sqlite
+PRAGMA table_info(users_profile);
+
+CLASE 16) Explorando el dashboard de administración
+---------------------------------------------------
+
+Para acceder al modelo Profile desde el admin hay que registrarlo
+Editar el archivo de admin de la app. En este caso /users/admin
+Dos formas:
+1. admin.site.register(Profile)
+2. 
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+	pass
+
+CLASE 17) Dashboard de Administración
+-------------------------------------
