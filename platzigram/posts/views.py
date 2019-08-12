@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 #Utilities
 from datetime import datetime
@@ -46,6 +47,7 @@ posts = [
 # 		""".format(**post)) # para no poner post.name, post.user
 # 	return HttpResponse('<br>'.join(content))
 
+@login_required
 def list_posts(request):
 	#dentro de cada aplicacion en el folder template lo busca por que esta definido en setting.py
 	#reuqes para agregar contesto, nombre del template, context:dictionary

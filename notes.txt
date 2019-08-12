@@ -271,3 +271,21 @@ STATICFILES_FINDERS en settings.oy son metodos para encontrar nuestros archivos
 
 CLASE 20) LOGIN
 ---------------
+A los paths le agrega el atributo name;
+action="{% url 'login' %} " en el form, login matchea con el name de la url. Importante si en otro momento se quiere cambiar el path.
+
+Reestringir el acceso a posts si no esta logueado
+en settings.py LOGIN_URL y el decorator @login_required en el methodo de la vista
+
+CLASE 21) Logout
+---------------
+
+CLASE 22) Signup
+----------------
+Al momento de crear el usuario, deberá crear el perfile 
+
+CLASE 23) Middlewares
+---------------------
+Crearemos un middleware para redireccionar al usuario al perfil para que actualice su información cuando no haya definido aún biografía o avatar.
+ProfileCompletionMiddleware
+Registramos el middleware en las settings
