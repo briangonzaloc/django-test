@@ -252,3 +252,22 @@ class ProfileAdmin(admin.ModelAdmin):
 
 CLASE 17) Dashboard de Administración
 -------------------------------------
+Agrega mas datos al detalle
+En /users/admin.py se crea la clase UserAdmin y ProfileInline para desde /admin poder crear/editar user y profile de una vez
+
+
+CLASE 18) Creación del modelo de posts
+---------------------------------------
+
+***************************TEMPLATES, AUTH Y MIDDLEWARES/*****************
+CLASE 19) Templates y archivos estáticos.
+----------------------------------------
+en settings.py incluir el path de los templates
+
+normalment en djsngo los archivos statics son css y js
+
+STATICFILES_DIRS en settings.py para definir la ruta de los css e img estaticos
+STATICFILES_FINDERS en settings.oy son metodos para encontrar nuestros archivos
+
+CLASE 20) LOGIN
+---------------

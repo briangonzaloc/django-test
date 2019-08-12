@@ -49,4 +49,4 @@ posts = [
 def list_posts(request):
 	#dentro de cada aplicacion en el folder template lo busca por que esta definido en setting.py
 	#reuqes para agregar contesto, nombre del template, context:dictionary
-	return render(request, 'feed.html', {'posts' : posts})
+	return render(request, 'posts/feed.html', {'posts' : posts})

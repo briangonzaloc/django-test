@@ -18,10 +18,10 @@ class Profile(models.Model):
 	modified     = models.DateTimeField(auto_now=True)
 	picture      = models.ImageField(
 		upload_to='users/pictures',
-		blank=True, 
-		null=True
+		blank    =True, 
+		null     =True
 	)
 
 	def __str__(self):
 		return self.user.username
-	
+
