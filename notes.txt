@@ -289,3 +289,36 @@ CLASE 23) Middlewares
 Crearemos un middleware para redireccionar al usuario al perfil para que actualice su información cuando no haya definido aún biografía o avatar.
 ProfileCompletionMiddleware
 Registramos el middleware en las settings
+
+
+*************************** FORMS *****************
+
+CLASE 24) FORMULARIOS DJANGO
+---------------------------
+Se crea la clase ProfileForm y se utiliza en uopdate_profile
+Error muy comun cuando estamos enviando archivos por primera vez. Solucion
+Formulario enctype="multipart/form-data"
+y en la vistaa los archivos no vienen de request.POST, sino en request.FILES
+
+CLASE 25) Mostrando el form en el template
+------------------------------------------
+https://docs.djangoproject.com/en/2.2/topics/forms/#working-with-form-templates
+
+update_profile
+Solucion en forms. CUando haces submit se vuelve a cargar los valores por default
+Ejemplo si la biografia tiene mas de 40 caracteres, sigue mostrando la anterios bio de 20 caracteres.
+
+CLASE 26) Model forms
+--------------------
+En la clase anterior quedo terminado el from pero se repite mucho codigo.
+Ahora se optimiza
+
+SI EL ACTION NO ESTA PRESENTE EN EL FORM, SE ENVIA A LA MISMA URL DONDE ESTA SIENDO PRESENTADO
+dos inputs hidden profile.pk y user.pk que es vulnerable. Deberia hacerse desde la vista
+
+CLASE 27) Validación de formularios
+---------------------------------
+Uso de widgets en la validacion que son representacion de django de elementos html
+https://docs.djangoproject.com/en/2.2/ref/forms/widgets/
+
+*************************** CLASS-BASED VIEWS *****************

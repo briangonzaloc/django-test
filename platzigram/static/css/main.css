@@ -22,7 +22,7 @@ html, body {
     border-radius: 3px;
 }
 
-.nav-icona {
+.nav-icon a {
     color: #262626;
     font-size: 1.3em;
     display: block;
@@ -30,7 +30,7 @@ html, body {
     margin-left: 1.2em;
     font-weight: 100;
 }
-.nav-icona:hover {
+.nav-icon a:hover {
     color: #1d5e72;;
 }
 #profile-box {
@@ -40,6 +40,6 @@ html, body {
     margin-top: 6em;
 }
 
-#user-posts#post-thumb {
+#user-posts #post-thumb {
     background: #fff;
 }
