@@ -12,7 +12,15 @@ from users.models import Profile
 
 def update_profile(request):
 	#update a user's profile
-	return render(request, 'users/update_profile.html')
+	profile = request.user.profile
+	return render(
+		request       = request, 
+		template_name = 'users/update_profile.html',
+		context       = {
+			'profile': profile,
+			'user'   : request.user
+		}
+	)
 
 def login_view(request):
 	#login a user
