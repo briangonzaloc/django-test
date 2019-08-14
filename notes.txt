@@ -326,6 +326,34 @@ ENtonces vimos dos formas de salvar el formulario y crear el registro:
 - Proxy => extends forms.Form => SignupForm con su funcion save 
 
 *************************** CLASS-BASED VIEWS *****************
+CLASE 28) class based views
+---------------------------
+
 Evitar repetir tareas
 http://ccbv.co.uk/
 https://docs.djangoproject.com/en/2.2/topics/http/urls/#namespaces-and-include
+en los redirect, reverse, y en los html hay que setear namespace:name_view
+
+CLASE 29) Protegiendo la vista de perfil, Detail View y List View
+----------------------------------------------------------------
+TemplateView es solo para mostrar una view.
+necesitamops DetailView
+Hay que definir un QuerySet =  a partir de que conjunto de datos, va a traer los datos
+Necesita un slug_field
+reverse() construye una url
+redirect no construye, es decir redirect('users:detail', kwarg={'username' : request.user.username }) no funciona para mandar el parametro username
+PostsFeedView context_object_name
+UserDetailView context_object_user
+
+CLASE 30) CreateView, FormView y UpdateView
+------------------------------------
+Paginator
+reverse_lazy la evalua hasta que la necesite. usada en create_post y lo cambiamos por el form CreatePostView (CreateView)
+
+signin no es un CreateView. Es un FormView: muestra form y respuest que necesista que se defina la funcion form_valid
+sino no hace nada.
+
+Vista de actualizacion update_perfile ->UpdateView
+
+CLASE 31) Generic auth views
+----------------------
