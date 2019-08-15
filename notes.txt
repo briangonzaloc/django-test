@@ -356,4 +356,49 @@ sino no hace nada.
 Vista de actualizacion update_perfile ->UpdateView
 
 CLASE 31) Generic auth views
-----------------------
+----------------------------
+LoginView -> setting LOGIN_REDIRECT_URL
+LogooutView -> setting LOGOUT_REDIRECT_URL
+
+
+
+
+CLASE 32) Arquirectura / Conceptos / Componentes 
+------------------------------------------------
+arquitectura de un proyecto de Django corriendo en un servidor de producción
+
+un archivo llamado wsgi.py ubicado dentro del folder de las configuraciones del proyecto, conviviendo junto con el archivo urls.py y settings.py. WSGI significa Web Server Gateway Interface y es un protocolo sencillo de llamadas para que un web server (como NGINX o Apache) se comuniquen con una aplicación web o framework escritos en Python.
+
+WSGI nos permite delegar el trabajo de aplicar reglas complejas de enrutamiento a un web server como NGINX y al mismo tiempo lograr que exista una comunicación del usuario final de nuestro proyecto de Python
+
+PostgreSQL- server NGINX - Django corriendo con Gunicorn
+
+:80/ ---- WSGI --> django
+:80/media/ ------> MEDIA_ROOT
+:80/static/ -----> STATIC_ROOT
+
+CLASE 33) ¿Cómo conectar Django a una base de datos? 
+---------------------------------------------------
+ORM (Object Relational Mapper)
+settings.py
+
+DATABASES = {
+	'default': {
+		'ENGINE' : 'django.db.backends.postgresql',
+		'NAME'   : 'mydatabase',
+		'USER'   : 'mydatabaseuser',
+		'PASSWORD' : 'mypassword',
+		'HOST' : '127.0.0.1',
+		'PORT' : '5432'
+	}
+}
+
+Django puede trabajar con múltiples bases de datos usando una estrategia llamada router
+
+CLASE 34) Configurar el servidor 
+-------------------------------
+https://platzi.com/clases/1318-django/12529-configurar-el-servidor40-4/
+
+
+CLASE 35) Preparación del VPS (en AWS) 
+-------------------------------------

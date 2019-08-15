@@ -140,3 +140,4 @@ MEDIA_URL = '/media/'
 # LOGIN_URL = '/users/login'
 LOGIN_URL='users:login'
 LOGIN_REDIRECT_URL='posts:feed'
+LOGOUT_REDIRECT_URL=LOGIN_URL

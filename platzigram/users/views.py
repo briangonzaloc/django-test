@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -80,20 +81,34 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
 # 		}
 # 	)
 
-def login_view(request):
-	#login a user
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user:
-			login(request, user)
-			return redirect('posts:feed') #use url name
-		else:
-			error = 'Invalid username and password'
-			return render(request, 'users/login.html', {'error':'Invalid username and password'})
+class LoginView(auth_views.LoginView):
+	template_name = 'users/login.html'
 
-	return render(request, 'users/login.html')
+
+# def login_view(request):
+# 	#login a user
+# 	if request.method == 'POST':
+# 		username = request.POST['username']
+# 		password = request.POST['password']
+# 		user = authenticate(request, username=username, password=password)
+# 		if user:
+# 			login(request, user)
+# 			return redirect('posts:feed') #use url name
+# 		else:
+# 			error = 'Invalid username and password'
+# 			return render(request, 'users/login.html', {'error':'Invalid username and password'})
+
+# 	return render(request, 'users/login.html')
+
+
+class SignupView(FormView):
+	template_name = 'users/signup.html'
+	form_class    = SignupForm
+	success_url   = reverse_lazy('users:login')
+
+	def form_valid(self,form):
+		form.save()
+		return super().form_valid(form)
 
 # First approach
 # def signup(request):
@@ -123,14 +138,6 @@ def login_view(request):
 
 # 	return render(request, 'users/signup.html')
 
-class SignupView(FormView):
-	template_name = 'users/signup.html'
-	form_class    = SignupForm
-	success_url   = reverse_lazy('users:login')
-
-	def form_valid(self,form):
-		form.save()
-		return super().form_valid(form)
 
 
 
@@ -149,11 +156,12 @@ class SignupView(FormView):
 # 		template_name='users/signup.html',
 # 		context={'form' : form})
 
+class LogoutView(auth_views.LogoutView):
+	template_name = 'users/logged_out.html'
 
-
-@login_required
-def logout_view(request):
-	# Logount a user
-	logout(request)
-	return redirect('users:login')
+# @login_required
+# def logout_view(request):
+# 	# Logount a user
+# 	logout(request)
+# 	return redirect('users:login')
 
